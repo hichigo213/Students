@@ -23,4 +23,5 @@ Route::resource('groups', 'GroupController');
 Route::resource('students', 'StudentController');
 Route::resource('marks', 'MarkController');
 Route::resource('subjects', 'SubjectController');
+Route::resource('images', "ImageController");
 

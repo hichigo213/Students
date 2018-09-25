@@ -21,7 +21,23 @@
     </style>
 </head>
 <body>
-    @yield('content')
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="{{route('groups.index')}}" class="btn btn-primary">Groups</a>
+            <a href="{{route('students.index')}}" class="btn-primary btn">Students</a>
+            <a href="{{route('subjects.index')}}" class="btn btn-primary">Subjects</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @yield('content')
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

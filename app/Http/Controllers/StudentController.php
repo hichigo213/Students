@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\Http\Requests\StoreStudent;
+use App\Mark;
+use App\Subject;
 use Illuminate\Http\Request;
 use App\Student;
 
@@ -36,15 +39,15 @@ class StudentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreStudent $request)
     {
         $student = new Student([
-            'name' => $request->get('student_name'),
-            'birthday' => $request->get('student_birthday'),
-            'group_id' => $request->get('student_group')
+            'name' => $request->get('name'),
+            'birthday' => $request->get('birthday'),
+            'group_id' => $request->get('group_id')
         ]);
-
         $student->save();
+        $validated = $request->validated();
 //        return back();
         return redirect('students')->with('success','Student has been added');
     }
@@ -57,7 +60,10 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        //
+        $subjects = Subject::all();
+        $marks = Mark::where('student_id', $id)->get();
+        $student = Student::find($id);
+        return view('groups.students.show', compact('student', 'subjects', 'marks'));
     }
 
     /**
@@ -79,13 +85,14 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreStudent $request, $id)
     {
         $student = Student::find($id);
             $student->name = $request->get('name');
             $student->birthday = $request->get('birthday');
             $student->group_id = $request->get('group_id');
         $student->save();
+        $validated = $request->validated();
         return redirect('students')->with('success','Student has been updated');
     }
 

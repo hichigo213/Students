@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Mark;
 use Illuminate\Http\Request;
 use App\Student;
 use App\Subject;
-use App\Group;
+use Illuminate\Support\Facades\DB;
+use App\Mark;
 
 class MarkController extends Controller
 {
@@ -15,11 +15,11 @@ class MarkController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Student $student)
     {
-        $subjects = Subject::with('marks')->get();
-        $students = Student::with('marks')->get();
-        return view('groups.students.edit.create_marks', compact('subjects', 'group', 'students'));
+        $marks = DB::table('marks')->select('mark')->where('student_id','$student->id');
+        return view('groups.student.show', compact('marks', 'student'));
+
     }
 
     /**
@@ -29,9 +29,7 @@ class MarkController extends Controller
      */
     public function create()
     {
-        $subjects = Subject::with('marks')->get();
-        $students = Student::with('marks')->get();
-        return view('groups.students.edit.create_marks', compact('subjects', 'students'));
+
     }
 
     /**
@@ -40,11 +38,14 @@ class MarkController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Student $student)
     {
-        $subjects = Subject::with('marks')->get();
-        $students = Student::with('marks')->get();
-          Mark::create($request->all());
+          $mark = new Mark([
+              'student_id' => $request->student,
+              'subject_id' => $request->subject,
+              'mark' => $request->mark,
+          ]);
+          $mark->save();
           return back();
     }
 
@@ -56,7 +57,6 @@ class MarkController extends Controller
      */
     public function show($id)
     {
-
     }
 
     /**
@@ -90,6 +90,8 @@ class MarkController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $mark = Mark::find($id);
+        $mark->delete();
+        return back();
     }
 }
