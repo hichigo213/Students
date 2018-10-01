@@ -20,11 +20,14 @@ class GroupController extends Controller
     public function index()
     {
         $groups=Group::all();
-        return view('groups.index', compact('groups'));
+        $students=Student::all();
+        $marks=Mark::all();
+        $subjects=Subject::all();
+        return view('groups.show.index', compact('groups', 'students', 'marks', 'subjects'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -61,7 +64,7 @@ class GroupController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

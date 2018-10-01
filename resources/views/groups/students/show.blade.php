@@ -3,7 +3,8 @@
 @section ('content')
         <div>
             <h1>{{$student->name}}</h1>
-
+            @include('groups.students.edit.image_crud')
+            @include('groups.students.edit')
             <table class="table">
                 <thead class="thead-dark">
                     <tr class="table-striped">
@@ -39,5 +40,4 @@
             </table>
         </div>
     @include('groups.students.edit.table_marks_store')
-    @include('groups.students.edit.image_crud')
 @endsection

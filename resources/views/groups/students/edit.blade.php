@@ -1,6 +1,3 @@
-@extends('layouts.app')
-
-@section('content')
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -32,4 +29,3 @@
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
     </div>
-@endsection

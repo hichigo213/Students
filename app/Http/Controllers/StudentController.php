@@ -19,12 +19,14 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::all();
-        return view('groups.students.index', compact('students'));
+        $subjects = Subject::all();
+        $marks = Mark::all();
+        return view('groups.students.show.index', compact('students', 'marks', 'subjects'));
 
     }
 
     /**
-     * Show the form for creating a new resource.
+     * show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -67,7 +69,7 @@ class StudentController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -86,14 +88,15 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(StoreStudent $request, $id)
-    {
+    {   $subjects = Subject::all();
+        $marks = Mark::all();
         $student = Student::find($id);
             $student->name = $request->get('name');
             $student->birthday = $request->get('birthday');
             $student->group_id = $request->get('group_id');
         $student->save();
         $validated = $request->validated();
-        return redirect('students')->with('success','Student has been updated');
+        return view('groups.students.show', compact('student', 'subjects', 'marks'));
     }
 
     /**
