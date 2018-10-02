@@ -14,13 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
-//Route::resources[
-//    'groups' => 'GroupControoler',
-//    'students' => 'StudentControoler',
-//    'groups' => 'GroupControoler',
-//]
+
 Route::resource('groups', 'GroupController');
 Route::resource('students', 'StudentController');
 Route::resource('marks', 'MarkController');
 Route::resource('subjects', 'SubjectController');
+Route::resource('photos', "PhotoController");
 

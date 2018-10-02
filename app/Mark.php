@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mark extends Model
 {
-    protected $fillable = ['mark'];
+    protected $fillable = ['mark','student_id', 'subject_id'];
 
     public $timestamps = false;
 

@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\Http\Requests\StoreGroup;
+use App\Mark;
+use App\Student;
+use App\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GroupController extends Controller
 {
@@ -14,8 +19,10 @@ class GroupController extends Controller
      */
     public function index()
     {
+        $subjects = Subject::all();
+        $students = Student::all();
         $groups=Group::all();
-        return view('groups.index', compact('groups'));
+        return view('groups.show.index', compact('groups','students', 'subjects'));
     }
 
     /**
@@ -34,10 +41,10 @@ class GroupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreGroup $request)
     {
         Group::create($request->all());
-
+        $validated = $request->validated();
         return redirect('groups');
     }
 
@@ -47,9 +54,12 @@ class GroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Group $group)
     {
-        //
+        $students = Student::where('group_id', $group->id)->get();
+        $marks = Mark::all();
+        $subjects = Subject::all();
+        return view('groups.show', compact('group', 'students', 'subjects','marks'));
     }
 
     /**
@@ -71,11 +81,12 @@ class GroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreGroup $request, $id)
     {
         $group = Group::find($id);
             $group->group_name = $request->get('group_name');
             $group->description = $request->get('description');
+        $validated = $request->validated();
         $group->save();
         return redirect('groups')->with('success', 'Group has been updated');
     }

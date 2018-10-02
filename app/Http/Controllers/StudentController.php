@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Group;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreStudent;
+use App\Mark;
+use App\Subject;
 use App\Student;
+use App\Photo;
 
 class StudentController extends Controller
 {
@@ -16,7 +19,10 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::all();
-        return view('groups.students.index', compact('students'));
+        $groups = Group::all();
+        $marks = Mark::all();
+        $subjects = Subject::all();
+        return view('groups.students.show.index', compact('students', 'groups', 'marks', 'subjects'));
 
     }
 
@@ -36,15 +42,15 @@ class StudentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreStudent $request)
     {
         $student = new Student([
-            'name' => $request->get('student_name'),
-            'birthday' => $request->get('student_birthday'),
-            'group_id' => $request->get('student_group')
+            'name' => $request->get('name'),
+            'birthday' => $request->get('birthday'),
+            'group_id' => $request->get('group_id')
         ]);
-
         $student->save();
+        $validated = $request->validated();
 //        return back();
         return redirect('students')->with('success','Student has been added');
     }
@@ -57,7 +63,11 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        //
+        $subjects = Subject::all();
+        $photo = Photo::find($id);
+        $marks = Mark::where('student_id', $id)->get();
+        $student = Student::find($id);
+        return view('groups.students.show', compact('student', 'subjects', 'marks', 'photo'));
     }
 
     /**
@@ -79,13 +89,14 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreStudent $request, $id)
     {
         $student = Student::find($id);
             $student->name = $request->get('name');
             $student->birthday = $request->get('birthday');
             $student->group_id = $request->get('group_id');
         $student->save();
+        $validated = $request->validated();
         return redirect('students')->with('success','Student has been updated');
     }
 

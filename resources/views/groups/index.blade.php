@@ -23,10 +23,11 @@
                             @method('DELETE')
                             <button class="btn btn-danger" type="submit">Delete</button>
                         </form>
-                    </td>
+                    <td><a href="{{route('groups.show', $group)}}" class="btn btn-primary">Students</a></td>
                 </tr>
             @endforeach
             </tbody>
         </table>
+        <a href="{{route('groups.create')}}" class="btn btn-primary">Add Group</a>
     </div>
 @endsection

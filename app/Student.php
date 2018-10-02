@@ -20,4 +20,8 @@ class Student extends Model
         return $this->hasMany(Mark::class);
     }
 
+    public function photos()
+    {
+        return $this->hasOne(Photo::class);
+    }
 }
