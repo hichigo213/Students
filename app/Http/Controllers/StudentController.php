@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Group;
-use App\Http\Requests\StoreStudent;
-use App\Mark;
-use App\Subject;
 use Illuminate\Http\Request;
 use App\Student;
 
@@ -19,14 +16,12 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::all();
-        $subjects = Subject::all();
-        $marks = Mark::all();
-        return view('groups.students.show.index', compact('students', 'marks', 'subjects'));
+        return view('groups.students.index', compact('students'));
 
     }
 
     /**
-     * show the form for creating a new resource.
+     * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -41,15 +36,15 @@ class StudentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreStudent $request)
+    public function store(Request $request)
     {
         $student = new Student([
-            'name' => $request->get('name'),
-            'birthday' => $request->get('birthday'),
-            'group_id' => $request->get('group_id')
+            'name' => $request->get('student_name'),
+            'birthday' => $request->get('student_birthday'),
+            'group_id' => $request->get('student_group')
         ]);
+
         $student->save();
-        $validated = $request->validated();
 //        return back();
         return redirect('students')->with('success','Student has been added');
     }
@@ -62,14 +57,11 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        $subjects = Subject::all();
-        $marks = Mark::where('student_id', $id)->get();
-        $student = Student::find($id);
-        return view('groups.students.show', compact('student', 'subjects', 'marks'));
+        //
     }
 
     /**
-     * show the form for editing the specified resource.
+     * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -87,16 +79,14 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreStudent $request, $id)
-    {   $subjects = Subject::all();
-        $marks = Mark::all();
+    public function update(Request $request, $id)
+    {
         $student = Student::find($id);
             $student->name = $request->get('name');
             $student->birthday = $request->get('birthday');
             $student->group_id = $request->get('group_id');
         $student->save();
-        $validated = $request->validated();
-        return view('groups.students.show', compact('student', 'subjects', 'marks'));
+        return redirect('students')->with('success','Student has been updated');
     }
 
     /**

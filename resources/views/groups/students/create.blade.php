@@ -1,13 +1,6 @@
+@extends('layouts.app')
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+@section('content')
     <div>
         <div>Add Student
         </div>
@@ -16,17 +9,18 @@
                 @csrf
                 <div class="form-group">
                     <label for="name">Student Name</label>
-                    <input type="text" class="form-control" name="name"/>
+                    <input type="text" class="form-control" name="student_name"/>
                 </div>
                 <div class="form-group">
                     <label for="birthday">Student Birthday</label>
-                    <input type="date" class="form-control" name="birthday"/>
+                    <input type="date" class="form-control" name="student_birthday"/>
                 </div>
                 <div class="form-group">
                     <label for="group_id">Group Number</label>
-                    <input type="text" class="form-control" name="group_id"/>
+                    <input type="text" class="form-control" name="student_group"/>
                 </div>
                 <button type="submit" class="btn btn-primary">Add</button>
             </form>
         </div>
     </div>
+@endsection

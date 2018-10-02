@@ -2,20 +2,16 @@
 
 @section('content')
     <div class="container">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <td>Group</td>
-                    <td>Student</td>
-                    <td>Birthday</td>
-                    @foreach($subjects as $subject)
-                        <td>{{$subject->subject_name}}</td>
-                    @endforeach
-                    <td>Average Mark</td>
-                    <td>Bio</td>
-                    <td>Delete</td>
-                </tr>
-            </thead>
-        </table>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Welcome</div>
+
+                    <div class="panel-body">
+                        Your Application's Landing <a href="{{route('marks.create')}}">Page</a>.
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

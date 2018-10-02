@@ -4,19 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Mark extends Model
+class Photo extends Model
 {
-    protected $fillable = ['mark'];
+    protected $fillable = ['photo', 'student_id'];
 
     public $timestamps = false;
 
     public function students()
     {
         return $this->belongsTo(Student::class);
-    }
-
-    public function subjects()
-    {
-        return $this->belongsTo(Subject::class);
     }
 }

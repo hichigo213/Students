@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Group;
+use App\Photo;
+use App\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
 
-class GroupController extends Controller
+class PhotoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +17,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups=Group::all();
-        return view('groups.index', compact('groups'));
+        //
     }
 
     /**
@@ -25,7 +27,7 @@ class GroupController extends Controller
      */
     public function create()
     {
-        return view('groups.create');
+
     }
 
     /**
@@ -34,20 +36,22 @@ class GroupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Student $student)
     {
-        Group::create($request->all());
-
-        return redirect('groups');
+        $file = $request->file('file');
+        $filename = $request->student_id .'.' . $file->getClientOriginalExtension();
+        Storage::disk('public')->putFileAs('', $file, $filename);
+        Photo::create(['student_id' => $request->student_id, 'photo' => $filename]);
+        return back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Photo  $image
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Photo $photo)
     {
         //
     }
@@ -55,42 +59,38 @@ class GroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Photo  $image
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Photo $photo)
     {
-        $group = Group::find($id);
-        return view('groups.edit', compact('group'));
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Photo  $image
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $group = Group::find($id);
-            $group->group_name = $request->get('group_name');
-            $group->description = $request->get('description');
-        $group->save();
-        return redirect('groups')->with('success', 'Group has been updated');
+        $photo = Photo::find($id);
+            $file = $request->file('file');
+            $filename = $photo->photo;
+            Storage::disk('public')->putFileAs('', $file, $filename);
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Photo  $image
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Photo $photo)
     {
-          $group = Group::find($id);
-          $group->delete();
-
-          return redirect('groups')->with('success', 'Group has been deleted');
+        //
     }
 }

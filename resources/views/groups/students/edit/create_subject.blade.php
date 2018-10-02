@@ -1,14 +1,8 @@
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+@extends('layouts.app')
+
+@section('content')
     <div>
-        <h3>Add Subject</h3>
+        <div>Add Subject</div>
         <div class="card-body">
             <form action="{{ route('subjects.store') }}" method="POST">
                 @csrf
@@ -16,7 +10,8 @@
                     <label for="name">Subject Name</label>
                     <input type="text" class="form-control" name="subject_name" />
                 </div>
-                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="submit" class="btn-primary">Add</button>
             </form>
         </div>
     </div>
+@endsection

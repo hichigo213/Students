@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mark;
 use Illuminate\Http\Request;
 use App\Student;
 use App\Subject;
-use Illuminate\Support\Facades\DB;
-use App\Mark;
+use App\Group;
 
 class MarkController extends Controller
 {
@@ -15,21 +15,23 @@ class MarkController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Student $student)
+    public function index()
     {
-        $marks = DB::table('marks')->select('mark')->where('student_id','$student->id');
-        return view('groups.student.show', compact('marks', 'student'));
-
+        $subjects = Subject::with('marks')->get();
+        $students = Student::with('marks')->get();
+        return view('groups.students.edit.create_marks', compact('subjects', 'group', 'students'));
     }
 
     /**
-     * show the form for creating a new resource.
+     * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-
+        $subjects = Subject::with('marks')->get();
+        $students = Student::with('marks')->get();
+        return view('groups.students.edit.create_marks', compact('subjects', 'students'));
     }
 
     /**
@@ -38,14 +40,11 @@ class MarkController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Student $student)
+    public function store(Request $request)
     {
-          $mark = new Mark([
-              'student_id' => $request->student,
-              'subject_id' => $request->subject,
-              'mark' => $request->mark,
-          ]);
-          $mark->save();
+        $subjects = Subject::with('marks')->get();
+        $students = Student::with('marks')->get();
+          Mark::create($request->all());
           return back();
     }
 
@@ -57,10 +56,11 @@ class MarkController extends Controller
      */
     public function show($id)
     {
+
     }
 
     /**
-     * show the form for editing the specified resource.
+     * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -90,8 +90,6 @@ class MarkController extends Controller
      */
     public function destroy($id)
     {
-        $mark = Mark::find($id);
-        $mark->delete();
-        return back();
+        //
     }
 }

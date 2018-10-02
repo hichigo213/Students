@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSubject;
 use App\Subject;
 use Illuminate\Http\Request;
 
@@ -20,7 +19,7 @@ class SubjectController extends Controller
     }
 
     /**
-     * show the form for creating a new resource.
+     * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -35,13 +34,12 @@ class SubjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSubject $request)
+    public function store(Request $request)
     {
         $subject = new Subject([
             'subject_name' => $request->get('subject_name')
         ]);
         $subject->save();
-        $validated = $request->validated();
         return redirect('subjects')->with('success', 'Subject has been added');
     }
 
@@ -57,7 +55,7 @@ class SubjectController extends Controller
     }
 
     /**
-     * show the form for editing the specified resource.
+     * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

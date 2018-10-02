@@ -1,9 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card-body">
-        <h2>Subjects List</h2>
-        <table class="table table-striped">
+    <div>
+        <table class="table-striped">
             <thead>
                 <tr>
                     <td>Subject ID</td>
@@ -27,5 +26,4 @@
             </tbody>
         </table>
     </div>
-    @include('groups.students.edit.create_subject')
 @endsection
