@@ -44,7 +44,6 @@ class GroupController extends Controller
     public function store(StoreGroup $request)
     {
         Group::create($request->all());
-        $validated = $request->validated();
         return redirect('groups');
     }
 
@@ -83,11 +82,7 @@ class GroupController extends Controller
      */
     public function update(StoreGroup $request, $id)
     {
-        $group = Group::find($id);
-            $group->group_name = $request->get('group_name');
-            $group->description = $request->get('description');
-        $validated = $request->validated();
-        $group->save();
+        Group::find($id)->update($request->all());
         return redirect('groups')->with('success', 'Group has been updated');
     }
 
@@ -99,9 +94,7 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
-          $group = Group::find($id);
-          $group->delete();
-
+          Group::find($id)->delete();
           return redirect('groups')->with('success', 'Group has been deleted');
     }
 }

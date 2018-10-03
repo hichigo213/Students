@@ -8,7 +8,7 @@ use App\Mark;
 use App\Subject;
 use App\Student;
 use App\Photo;
-
+use Illuminate\Support\Facades\DB;
 class StudentController extends Controller
 {
     /**
@@ -18,7 +18,12 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::all();
+        if (request()->has('namedesc')){
+            $students=Student::NameDesc()->paginate(2);
+        }
+        else{
+            $students=Student::paginate(2);
+        }
         $groups = Group::all();
         $marks = Mark::all();
         $subjects = Subject::all();
@@ -44,14 +49,7 @@ class StudentController extends Controller
      */
     public function store(StoreStudent $request)
     {
-        $student = new Student([
-            'name' => $request->get('name'),
-            'birthday' => $request->get('birthday'),
-            'group_id' => $request->get('group_id')
-        ]);
-        $student->save();
-        $validated = $request->validated();
-//        return back();
+        Student::create($request->all());
         return redirect('students')->with('success','Student has been added');
     }
 
@@ -91,13 +89,8 @@ class StudentController extends Controller
      */
     public function update(StoreStudent $request, $id)
     {
-        $student = Student::find($id);
-            $student->name = $request->get('name');
-            $student->birthday = $request->get('birthday');
-            $student->group_id = $request->get('group_id');
-        $student->save();
-        $validated = $request->validated();
-        return redirect('students')->with('success','Student has been updated');
+        Student::find($id)->update($request->all());
+        return back();
     }
 
     /**
@@ -108,9 +101,7 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        $student = Student::find($id);
-        $student->delete();
-
+        Student::find($id)->delete();
         return redirect('students')->with('success','Student has been deleted');
     }
 }

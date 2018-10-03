@@ -41,7 +41,6 @@ class SubjectController extends Controller
             'subject_name' => $request->get('subject_name')
         ]);
         $subject->save();
-        $validated = $request->validated();
         return redirect('subjects')->with('success', 'Subject has been added');
     }
 

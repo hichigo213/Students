@@ -24,4 +24,25 @@ class Student extends Model
     {
         return $this->hasOne(Photo::class);
     }
+
+    public function scopeNameDesc($query)
+    {
+        return $query->orderBy('name','desc');
+    }
+
+    public function scopeNameAsc($query)
+    {
+        return $query->orderBy('name', 'asc');
+    }
+    public function scopeNumberAsc($query)
+    {
+        $query->orderBy('group_id', 'asc');
+    }
+    public function scopeNumberDesc($query)
+    {
+        $query->orderBy('group_id', 'desc');
+    }
+//if(request()->has('namedesc')) {
+//$students = Student::NumberDesc()->paginate(2);
+//}
 }

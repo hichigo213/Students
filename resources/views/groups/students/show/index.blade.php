@@ -1,6 +1,7 @@
 @extends ('layouts.app')
 
 @section ('content')
+    @include('groups.students.filter')
     <div>
         <table class="table table-striped">
             <thead>
@@ -58,5 +59,6 @@
             </tbody>
         </table>
     </div>
+    {{$students->links()}}
     @include('groups.students.create')
 @endsection

@@ -18,6 +18,9 @@
         body {
             font-family: 'Lato';
         }
+        .pagination li{
+            display: inline;
+        }
     </style>
 </head>
 <body>
