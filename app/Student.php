@@ -2,6 +2,7 @@
 
 namespace App;
 
+use http\Env\Request;
 use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
@@ -25,24 +26,13 @@ class Student extends Model
         return $this->hasOne(Photo::class);
     }
 
-    public function scopeNameDesc($query)
+    public function scopeName($query)
     {
-        return $query->orderBy('name','desc');
+        return $query->where('name', request('name'));
+    }
+    public function scopeGroup($query)
+    {
+        return $query->where('group_id', request('group_id'));
     }
 
-    public function scopeNameAsc($query)
-    {
-        return $query->orderBy('name', 'asc');
-    }
-    public function scopeNumberAsc($query)
-    {
-        $query->orderBy('group_id', 'asc');
-    }
-    public function scopeNumberDesc($query)
-    {
-        $query->orderBy('group_id', 'desc');
-    }
-//if(request()->has('namedesc')) {
-//$students = Student::NumberDesc()->paginate(2);
-//}
 }

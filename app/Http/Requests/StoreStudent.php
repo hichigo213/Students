@@ -14,7 +14,7 @@ class StoreStudent extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|alpha|max:255',
+            'name' => 'required|max:255',
             'birthday' => 'required|date',
             'group_id' => 'required|numeric'
         ];

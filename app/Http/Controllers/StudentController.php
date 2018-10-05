@@ -8,6 +8,7 @@ use App\Mark;
 use App\Subject;
 use App\Student;
 use App\Photo;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 class StudentController extends Controller
 {
@@ -18,15 +19,24 @@ class StudentController extends Controller
      */
     public function index()
     {
-        if (request()->has('namedesc')){
-            $students=Student::NameDesc()->paginate(2);
-        }
-        else{
-            $students=Student::paginate(2);
-        }
+        $students = Student::query();
         $groups = Group::all();
         $marks = Mark::all();
         $subjects = Subject::all();
+
+        if (request()->has('name')&&(request()->name != null)){
+            $students = $students->Name();
+        }
+        if(request()->has('group_id')&&(request()->group_id != null)){
+            $students = $students->Group();
+        }
+        if(request()->has('mark')){
+            $students = $students->with(['marks' => function ($query)
+            {
+                $query->groupBy('mark')->havingRaw('AVG(mark)=?', request()->mark);
+            }]);
+        }
+        $students = $students->paginate(2)->appends('group_id',request()->group_id)->appends('name',request()->name);
         return view('groups.students.show.index', compact('students', 'groups', 'marks', 'subjects'));
 
     }
@@ -102,6 +112,6 @@ class StudentController extends Controller
     public function destroy($id)
     {
         Student::find($id)->delete();
-        return redirect('students')->with('success','Student has been deleted');
+        return redirect('students.show')->with('success','Student has been deleted');
     }
 }
