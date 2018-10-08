@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Group;
+use App\Models\Group;
+use App\Models\Mark;
+use App\Models\Student;
+use App\Models\Subject;
+
 use App\Http\Requests\StoreGroup;
-use App\Mark;
-use App\Student;
-use App\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,9 +21,8 @@ class GroupController extends Controller
     public function index()
     {
         $subjects = Subject::all();
-        $students = Student::all();
-        $groups=Group::all();
-        return view('groups.show.index', compact('groups','students', 'subjects'));
+        $groups=Group::with('students')->get();
+        return view('groups.show.index', compact('groups', 'students', 'subjects'));
     }
 
     /**
@@ -58,7 +58,7 @@ class GroupController extends Controller
         $students = Student::where('group_id', $group->id)->get();
         $marks = Mark::all();
         $subjects = Subject::all();
-        return view('groups.show', compact('group', 'students', 'subjects','marks'));
+        return view('groups.show', compact('group', 'students', 'subjects', 'marks'));
     }
 
     /**

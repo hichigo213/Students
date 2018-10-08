@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use http\Env\Request;
 use Illuminate\Database\Eloquent\Model;
@@ -25,7 +25,6 @@ class Student extends Model
     {
         return $this->hasOne(Photo::class);
     }
-
     public function scopeName($query)
     {
         return $query->where('name', request('name'));
@@ -34,5 +33,4 @@ class Student extends Model
     {
         return $query->where('group_id', request('group_id'));
     }
-
 }

@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Repository;
+
 use App\Student;
 use Illuminate\Support\Facades\DB;
 
-Class Filter
+class Filter
 {
 //public function MarkAvg(Student $students, $temp) {
 //    foreach ($students as $student) {
@@ -16,7 +17,5 @@ Class Filter
 //    }
 //    endforeach
 //    return $temp;
-//}
-
-
+//
 }

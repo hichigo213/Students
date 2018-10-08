@@ -4,20 +4,21 @@
     <div>
         <table class="table table-striped">
             <thead>
-            <tr>
-                <td>Student ID</td>
-                <td>Student Name</td>
-                <td>Student Birthday</td>
-                <td>Student Group</td>
-                @foreach($subjects as $subject)
-                    <td>{{$subject->subject_name}}</td>
-                @endforeach
-                @foreach($subjects as $subject)
-                    <td>{{$subject->subject_name}} Average</td>
-                @endforeach
-                <td>Average</td>
-            </tr>
+              <tr>
+                  <td>Student ID</td>
+                  <td>Student Name</td>
+                  <td>Student Birthday</td>
+                  <td>Student Group</td>
+                  @foreach($subjects as $subject)
+                      <td>{{ $subject->subject_name }}</td>
+                  @endforeach
+                  @foreach($subjects as $subject)
+                      <td>{{ $subject->subject_name }} Average</td>
+                  @endforeach
+                  <td>Average</td>
+              </tr>
             </thead>
+
             <tbody>
             @php
             $collect = collect();
@@ -27,10 +28,10 @@
                     $collect->push($student->marks->avg('mark'));
                 @endphp
                 <tr>
-                    <td>{{$student->id}}</td>
-                    <td>{{$student->name}}</td>
-                    <td>{{$student->birthday}}</td>
-                    <td>{{$student->group_id}}</td>
+                    <td>{{ $student->id }}</td>
+                    <td>{{ $student->name }</td>
+                    <td>{{ $student->birthday }}</td>
+                    <td>{{ $student->group_id }}</td>
 
                     @foreach($subjects as $subject)
                         <td>
@@ -62,7 +63,7 @@
             @endforeach
             </tbody>
         </table>
-        <span>Group Average = {{round($collect->avg(), 2)}}</span>
-        <span></span>
+
+        <span>Group Average = {{ round($collect->avg(), 2) }}</span>
     </div>
 @endsection

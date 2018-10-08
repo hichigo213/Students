@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Photo;
-use App\Student;
+use App\Models\Photo;
+use App\Models\Student;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
@@ -27,7 +28,6 @@ class PhotoController extends Controller
      */
     public function create()
     {
-
     }
 
     /**

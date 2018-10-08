@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Group;
+use App\Models\Group;
+use App\Models\Mark;
+use App\Models\Subject;
+use App\Models\Student;
+use App\Models\Photo;
+
 use App\Http\Requests\StoreStudent;
-use App\Mark;
-use App\Subject;
-use App\Student;
-use App\Photo;
+
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+
 class StudentController extends Controller
 {
     /**
@@ -19,26 +22,22 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::query();
-        $groups = Group::all();
-        $marks = Mark::all();
+        $students = Student::query()->with('marks');
         $subjects = Subject::all();
 
-        if (request()->has('name')&&(request()->name != null)){
+        if (request()->has('name')&&(request()->name != null)) {
             $students = $students->Name();
         }
-        if(request()->has('group_id')&&(request()->group_id != null)){
+        if (request()->has('group_id')&&(request()->group_id != null)) {
             $students = $students->Group();
         }
-        if(request()->has('mark')){
-            $students = $students->with(['marks' => function ($query)
-            {
-                $query->groupBy('mark')->havingRaw('AVG(mark)=?', request()->mark);
-            }]);
-        }
-        $students = $students->paginate(2)->appends('group_id',request()->group_id)->appends('name',request()->name);
-        return view('groups.students.show.index', compact('students', 'groups', 'marks', 'subjects'));
-
+        // if (request()->has('mark')) {
+        //     $students = $students->with(['marks' => function ($query) {
+        //         $query->groupBy('student_id')->havingRaw('AVG(mark)=?', [request()->mark]);
+        //     }]);
+        // }
+        $students = $students->paginate(2)->appends('group_id', request()->group_id)->appends('name', request()->name);
+        return view('groups.students.show.index', compact('students', 'marks', 'subjects'));
     }
 
     /**
@@ -60,7 +59,7 @@ class StudentController extends Controller
     public function store(StoreStudent $request)
     {
         Student::create($request->all());
-        return redirect('students')->with('success','Student has been added');
+        return redirect('students')->with('success', 'Student has been added');
     }
 
     /**
@@ -112,6 +111,6 @@ class StudentController extends Controller
     public function destroy($id)
     {
         Student::find($id)->delete();
-        return redirect('students.show')->with('success','Student has been deleted');
+        return redirect('students.show')->with('success', 'Student has been deleted');
     }
 }

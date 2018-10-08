@@ -11,9 +11,8 @@
         </div>
     @endif
     <div>
-        <div class="card-header">Add Group
-        </div>
-        <br />
+        <div class="card-header">Add Group</div>
+        
         <div class="card-body">
             <form method="post" action="{{ route('groups.update', $group->id) }}">
                 @method('PATCH')

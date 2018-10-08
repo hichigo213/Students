@@ -16,7 +16,15 @@
                     <td>{{$subject->id}}</td>
                     <td>{{$subject->subject_name}}</td>
                     <td>
-                        <form action="{{route('subjects.destroy',$subject->id)}}" method="post">
+                        <form action="{{route('subjects.update', $subject->id)}}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <input type="text" name="subject_name">
+                            <button type="submit">Update</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{{route('subjects.destroy',$subject->id)}}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger" type="submit">Delete</button>

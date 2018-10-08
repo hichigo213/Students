@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mark;
+use App\Models\Student;
+use App\Models\Subject;
+
 use Illuminate\Http\Request;
-use App\Student;
-use App\Subject;
 use Illuminate\Support\Facades\DB;
-use App\Mark;
 
 class MarkController extends Controller
 {
@@ -17,9 +18,8 @@ class MarkController extends Controller
      */
     public function index(Student $student)
     {
-        $marks = DB::table('marks')->select('mark')->where('student_id','$student->id');
+        $marks = DB::table('marks')->select('mark')->where('student_id', '$student->id');
         return view('groups.student.show', compact('marks', 'student'));
-
     }
 
     /**
@@ -29,7 +29,6 @@ class MarkController extends Controller
      */
     public function create()
     {
-
     }
 
     /**
@@ -40,12 +39,7 @@ class MarkController extends Controller
      */
     public function store(Request $request, Student $student)
     {
-          $mark = new Mark([
-              'student_id' => $request->student,
-              'subject_id' => $request->subject,
-              'mark' => $request->mark,
-          ]);
-          $mark->save();
+          Mark::create($request>all());
           return back();
     }
 
@@ -90,8 +84,7 @@ class MarkController extends Controller
      */
     public function destroy($id)
     {
-        $mark = Mark::find($id);
-        $mark->delete();
+        Mark::find($id)->delete();
         return back();
     }
 }

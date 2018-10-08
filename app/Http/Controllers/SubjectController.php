@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
+use App\Models\Subject;
+
 use App\Http\Requests\StoreSubject;
-use App\Subject;
 use Illuminate\Http\Request;
 
 class SubjectController extends Controller
@@ -37,10 +39,7 @@ class SubjectController extends Controller
      */
     public function store(StoreSubject $request)
     {
-        $subject = new Subject([
-            'subject_name' => $request->get('subject_name')
-        ]);
-        $subject->save();
+        Subject::create($request->all());
         return redirect('subjects')->with('success', 'Subject has been added');
     }
 
@@ -75,7 +74,8 @@ class SubjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Subject::find($id)->update($request->all());
+        return back();
     }
 
     /**
