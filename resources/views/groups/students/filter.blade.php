@@ -20,27 +20,20 @@
               <option @if (3 == request()->mark) selected @endif>3</option>
             </select>
           </div>
-
         </div>
-      <button type="submit" class="btn">Filter</button>
-    </form>
-    <br>
+      <div class="form-group">
 
-<form action="{{route('students.index')}}" method="GET">
-  <div class="form-group">
+          <div class=form-group>
+            <label for="name">Input Student Name</label>
+            <input type="text" name="name" value="{{ request()->name }}">
+          </div>
 
-        <div class=form-group>
-          <label for="name">Input Student Name</label>
-          <input type="text" name="name" value="{{ request()->name }}">
-        </div>
+          <div class='form-group'>
+            <label for="group_id">Input Group Number</label>
+            <input type="text" name="group_id"  value="{{ request()->group_id }}">
+          </div>
 
-        <div class='form-group'>
-          <label for="group_id">Input Group Number</label>
-          <input type="text" name="group_id"  value="{{ request()->group_id }}">
-        </div>
-
-      <button type="submit" class="btn">Filter</button>
-    </div>
+        <button type="submit" class="btn">Filter</button>
+      </div>
   </form>
-
 </div>
