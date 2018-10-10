@@ -24,19 +24,11 @@ class StudentController extends Controller
     {
         $students = Student::query()->with('marks');
         $subjects = Subject::all();
-
-        if (request()->has('name')&&(request()->name != null)) {
-            $students = $students->Name();
-        }
-        if (request()->has('group_id')&&(request()->group_id != null)) {
-            $students = $students->Group();
-        }
-        // if (request()->has('mark')) {
-        //     $students = $students->with(['marks' => function ($query) {
-        //         $query->groupBy('student_id')->havingRaw('AVG(mark)=?', [request()->mark]);
-        //     }]);
-        // }
-        $students = $students->paginate(2)->appends('group_id', request()->group_id)->appends('name', request()->name);
+        $students = $students
+                    ->Filter()
+                    ->paginate(2)
+                    ->appends('group_id', request()->group_id)
+                    ->appends('name', request()->name);
         return view('groups.students.show.index', compact('students', 'marks', 'subjects'));
     }
 

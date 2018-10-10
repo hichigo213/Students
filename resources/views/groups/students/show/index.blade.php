@@ -34,17 +34,16 @@
                                 @php
                                     $var = $student->marks->avg('mark');
                                 @endphp
-                                <td bgcolor="
+                                <td
                                     @if ($var == 5)
-                                        lightgreen
+                                        bgcolor="lightgreen"
                                     @elseif ($var >= 4.5)
-                                        yellow
+                                        bgcolor="yellow"
                                     @elseif ($var <= 3)
-                                        red
+                                        bgcolor="red"
                                     @else
-                                        white
                                     @endif
-                                        ">
+                                    >
                                     {{round($var ,2)}}
                                 </td>
                                 <td>

@@ -33,4 +33,13 @@ class Student extends Model
     {
         return $query->where('group_id', request('group_id'));
     }
+    public function scopeFilter($query)
+    {
+        if (request()->has('name')&&(request()->name != null)) {
+            return $query = $query->Name();
+        }
+        if (request()->has('group_id')&&(request()->group_id != null)) {
+            return $query = $query->Group();
+        }
+    }
 }
