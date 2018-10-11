@@ -42,6 +42,7 @@ class PhotoController extends Controller
         $filename = $request->student_id .'.' . $file->getClientOriginalExtension();
         Storage::disk('public')->putFileAs('', $file, $filename);
         Photo::create(['student_id' => $request->student_id, 'photo' => $filename]);
+
         return back();
     }
 
@@ -80,6 +81,7 @@ class PhotoController extends Controller
             $file = $request->file('file');
             $filename = $photo->photo;
             Storage::disk('public')->putFileAs('', $file, $filename);
+
         return back();
     }
 

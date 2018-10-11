@@ -25,21 +25,25 @@ class Student extends Model
     {
         return $this->hasOne(Photo::class);
     }
+
     public function scopeName($query)
     {
         return $query->where('name', request('name'));
     }
+
     public function scopeGroup($query)
     {
         return $query->where('group_id', request('group_id'));
     }
+
     public function scopeFilter($query)
     {
-        if (request()->has('name')&&(request()->name != null)) {
-            return $query = $query->Name();
+        if (request()->has('name') && (request()->name != null)) {
+            return $query = $query->name();
         }
-        if (request()->has('group_id')&&(request()->group_id != null)) {
-            return $query = $query->Group();
+
+        if (request()->has('group_id') && (request()->group_id != null)) {
+            return $query = $query->group();
         }
     }
 }

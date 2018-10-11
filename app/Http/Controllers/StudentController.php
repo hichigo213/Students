@@ -25,10 +25,11 @@ class StudentController extends Controller
         $students = Student::query()->with('marks');
         $subjects = Subject::all();
         $students = $students
-                    ->Filter()
+                    ->filter()
                     ->paginate(2)
                     ->appends('group_id', request()->group_id)
                     ->appends('name', request()->name);
+
         return view('groups.students.show.index', compact('students', 'marks', 'subjects'));
     }
 
@@ -51,6 +52,7 @@ class StudentController extends Controller
     public function store(StoreStudent $request)
     {
         Student::create($request->all());
+
         return redirect('students')->with('success', 'Student has been added');
     }
 
@@ -66,6 +68,7 @@ class StudentController extends Controller
         $photo = Photo::find($id);
         $marks = Mark::where('student_id', $id)->get();
         $student = Student::find($id);
+
         return view('groups.students.show', compact('student', 'subjects', 'marks', 'photo'));
     }
 
@@ -78,6 +81,7 @@ class StudentController extends Controller
     public function edit($id)
     {
         $student = Student::find($id);
+
         return view('groups.students.edit', compact('student'));
     }
 
@@ -91,6 +95,7 @@ class StudentController extends Controller
     public function update(StoreStudent $request, $id)
     {
         Student::find($id)->update($request->all());
+
         return back();
     }
 
@@ -103,6 +108,7 @@ class StudentController extends Controller
     public function destroy($id)
     {
         Student::find($id)->delete();
+
         return redirect('students.show')->with('success', 'Student has been deleted');
     }
 }

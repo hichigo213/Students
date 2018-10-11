@@ -19,6 +19,7 @@ class MarkController extends Controller
     public function index(Student $student)
     {
         $marks = DB::table('marks')->select('mark')->where('student_id', '$student->id');
+
         return view('groups.student.show', compact('marks', 'student'));
     }
 
@@ -40,6 +41,7 @@ class MarkController extends Controller
     public function store(Request $request, Student $student)
     {
           Mark::create($request>all());
+
           return back();
     }
 
@@ -85,6 +87,7 @@ class MarkController extends Controller
     public function destroy($id)
     {
         Mark::find($id)->delete();
+
         return back();
     }
 }

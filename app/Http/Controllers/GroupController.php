@@ -22,6 +22,7 @@ class GroupController extends Controller
     {
         $subjects = Subject::all();
         $groups=Group::with('students')->get();
+
         return view('groups.show.index', compact('groups', 'students', 'subjects'));
     }
 
@@ -44,6 +45,7 @@ class GroupController extends Controller
     public function store(StoreGroup $request)
     {
         Group::create($request->all());
+
         return redirect('groups');
     }
 
@@ -58,6 +60,7 @@ class GroupController extends Controller
         $students = Student::where('group_id', $group->id)->get();
         $marks = Mark::all();
         $subjects = Subject::all();
+
         return view('groups.show', compact('group', 'students', 'subjects', 'marks'));
     }
 
@@ -70,6 +73,7 @@ class GroupController extends Controller
     public function edit($id)
     {
         $group = Group::find($id);
+
         return view('groups.edit', compact('group'));
     }
 
@@ -83,6 +87,7 @@ class GroupController extends Controller
     public function update(StoreGroup $request, $id)
     {
         Group::find($id)->update($request->all());
+
         return redirect('groups')->with('success', 'Group has been updated');
     }
 
@@ -95,6 +100,7 @@ class GroupController extends Controller
     public function destroy($id)
     {
           Group::find($id)->delete();
+
           return redirect('groups')->with('success', 'Group has been deleted');
     }
 }

@@ -18,6 +18,7 @@ class SubjectController extends Controller
     public function index()
     {
         $subjects = Subject::all();
+
         return view('groups.students.edit.index_subject', compact('subjects'));
     }
 
@@ -40,6 +41,7 @@ class SubjectController extends Controller
     public function store(StoreSubject $request)
     {
         Subject::create($request->all());
+
         return redirect('subjects')->with('success', 'Subject has been added');
     }
 
@@ -75,6 +77,7 @@ class SubjectController extends Controller
     public function update(Request $request, $id)
     {
         Subject::find($id)->update($request->all());
+
         return back();
     }
 
